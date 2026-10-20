@@ -530,7 +530,14 @@ section.${c}>footer { z-index: 1; }
 .${c} table { border-collapse: collapse; }
 .${c} table td, .${c} table th { vertical-align: top; }
 .${c} p { margin: 0pt; min-height: 1em; }
+.${c} p.${c}-continued::before { content: none; }
 .${c} span { white-space: pre-wrap; overflow-wrap: break-word; }
+@supports (line-height: round(up, 1em, 1px)) {
+	/* Word 'auto' line spacing is the multiple times the font size rounded up to whole pixels
+	   (Word for the web: 10pt = 13.33px gives 14px lines at single spacing). Without --docx-line
+	   (exact or at-least spacing) the declaration is invalid and the run inherits its paragraph's. */
+	.${c} p span { line-height: calc(var(--docx-line) * round(up, 1em, 1px)); }
+}
 .${c} a { color: inherit; text-decoration: inherit; }
 .${c} svg { fill: transparent; }
 `;
